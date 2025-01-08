@@ -1,0 +1,96 @@
+public class Exercise25_01 {
+    public static void main(String[] args) {
+        new Exercise25_01();
+    }
+
+    public Exercise25_01() {
+        BinaryTree<String> tree = new BinaryTree<String>();
+        System.out.print("The height of tree is " + tree.height());
+        tree.insert("Red");
+        System.out.print("\nThe height of tree is " + tree.height());
+        tree.insert("Green");
+        System.out.print("\nThe height of tree is " + tree.height());
+        BinaryTree<String> tree1 = new BinaryTree<String>(new String[]
+                {"Tom", "George", "Jean", "Jane", "Kevin", "Peter", "Susan",
+                "Jen", "Kim", "Michael", "Michelle"});
+        System.out.print("\nThe breadth-first traversal for tree1 is ");
+        tree1.breadthFirstTraversal();
+        System.out.print("\nThe height of tree1 is " + tree1.height());
+        BinaryTree<Integer> tree2 =
+                new BinaryTree<Integer>(new Integer[]{50, 45, 35, 48, 59, 51, 58});
+        System.out.print("\nThe breadth-first traversal for tree2 is ");
+        tree2.breadthFirstTraversal();
+        System.out.print("\nThe height of tree2 is " + tree2.height());
+    }
+
+    public class BinaryTree<E extends Comparable<E>> extends AbstractTree<E> {
+        protected TreeNode<E> root;
+        protected int size = 0;
+
+        /** Create a default binary tree */
+        public BinaryTree() {
+        }
+
+        public BinaryTree(E[] objects) {
+            for (int i = 0; i < objects.length; i++)
+                insert(objects[i]);
+        }
+
+        public int height() {
+            return height(root);
+        }
+
+
+        protected int height(TreeNode<E> node) {
+            if (node == null)
+                return 0;
+            else
+                return 1 + Math.max(height(node.left), height(node.right));
+        }
+
+
+        public void breadthFirstTraversal() {
+            if (root == null) return;
+
+
+            java.util.LinkedList<TreeNode<E>> queue = new java.util.LinkedList<>();
+            queue.add(root);
+
+            while (!queue.isEmpty()) {
+                TreeNode<E> current = queue.poll();
+                System.out.print(current.element + " ");
+
+                if (current.left != null) {
+                    queue.add(current.left);
+                }
+
+                if (current.right != null) {
+                    queue.add(current.right);
+                }
+            }
+        }
+
+
+
+
+        public class TreeNode<E extends Comparable<E>> {
+            E element;
+            TreeNode<E> left;
+            TreeNode<E> right;
+
+            public TreeNode(E e) {
+                element = e;
+            }
+        }
+
+
+        public int getSize() {
+            return size;
+        }
+
+
+        public TreeNode<E> getRoot() {
+            return root;
+        }
+    }
+}
